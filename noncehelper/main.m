@@ -92,26 +92,6 @@ int main(int argc, char *argv[], char *envp[]) {
 					NSLog(@"exploiting using weightBufs");
 
 					// Find some precompiled model and get the cpusubtype of it because we need it in the exploit
-					NSURL* anedCrap = [NSURL fileURLWithPath:@"/System/Library/ImagingNetworks"];
-					NSDirectoryEnumerator<NSURL*>* enumerator = [[NSFileManager defaultManager] enumeratorAtURL:anedCrap 
-                         includingPropertiesForKeys:nil 
-                                            options:0 
-                                       errorHandler:nil];
-					NSURL* file;
-					NSString* aneSubType = [_ANEDeviceInfo aneSubType].uppercaseString;
-					while(file = [enumerator nextObject])
-					{
-						if([file.pathExtension isEqualToString:@"hwx"] && [file.lastPathComponent containsString:aneSubType])
-						{
-							struct mach_header header;
-							FILE* f = fopen(file.fileSystemRepresentation, "r");
-							if(!f) continue;
-							fread(&header, sizeof(struct mach_header), 1, f);
-							fclose(f);
-							subtypeToUse = header.cpusubtype;
-							break;
-						}
-					}
 
 					while(1)
 					{
